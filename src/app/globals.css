@@ -1,0 +1,65 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-bg: #F5F7F9;
+  --color-surface: #FFFFFF;
+  --color-border: #DDE2E7;
+  --color-text: #17202A;
+  --color-text-secondary: #66717D;
+  --color-text-muted: #8A949E;
+  --color-primary: #3155D9;
+  --color-primary-hover: #2643B5;
+  --color-success: #2E9B68;
+  --color-warning: #D99A24;
+  --color-danger: #D94A55;
+
+  --radius-panel: 14px;
+  --radius-control: 8px;
+  --radius-small: 6px;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-family: 'Plus Jakarta Sans', 'Prompt', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Precise transit scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F4F8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.3);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
