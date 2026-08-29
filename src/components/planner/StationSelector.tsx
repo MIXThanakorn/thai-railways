@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Station } from '@/types/railway';
 import { PRESET_ROUTES } from '@/data/network';
-import { ArrowUpDown, Search, MapPin, X, Navigation2 } from 'lucide-react';
+import { ArrowUpDown, Navigation2 } from 'lucide-react';
 import { StationSearchModal } from './StationSearchModal';
 
 interface StationSelectorProps {
@@ -39,90 +39,95 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
         </h2>
       </div>
 
-      {/* Connected Transit Route Input Module */}
-      <div className="relative bg-[#F8FAFC] border border-[#DDE2E7] rounded-lg p-3 space-y-2">
-        {/* Visual vertical connector line */}
-        <div className="absolute left-[23px] top-[26px] bottom-[26px] w-[2px] bg-slate-300 pointer-events-none" />
+      {/* Connected Transit Route Input Module (Solid Flex Layout) */}
+      <div className="bg-[#F8FAFC] border border-[#DDE2E7] rounded-lg p-3">
+        <div className="flex items-stretch gap-3">
+          {/* Left: Transit Connecting Dots Spine */}
+          <div className="flex flex-col items-center justify-between py-3.5 px-0.5 shrink-0">
+            <div className="w-3.5 h-3.5 rounded-full bg-[#2E9B68] ring-4 ring-[#2E9B68]/15 z-10 shrink-0" />
+            <div className="w-[2px] flex-1 bg-slate-300 my-1 min-h-[20px]" />
+            <div className="w-3.5 h-3.5 rounded-full bg-[#D94A55] ring-4 ring-[#D94A55]/15 z-10 shrink-0" />
+          </div>
 
-        {/* Origin Input */}
-        <div className="relative pl-7">
-          <div className="absolute left-0 top-3 -translate-y-1/2 w-3 h-3 rounded-full bg-[#2E9B68] ring-4 ring-[#2E9B68]/15 z-10" />
-
-          <button
-            type="button"
-            onClick={() => setModalMode('origin')}
-            className={`w-full text-left py-2 px-3 rounded-md border transition-all ${
-              origin
-                ? 'bg-white border-[#DDE2E7] text-[#17202A]'
-                : 'bg-white border-dashed border-slate-300 text-slate-400 hover:border-slate-400'
-            }`}
-          >
-            <div className="text-[10px] font-bold text-[#2E9B68] uppercase tracking-wider">
-              ต้นทาง / FROM
-            </div>
-            {origin ? (
-              <div className="flex items-center justify-between mt-0.5">
-                <div className="font-semibold text-sm text-[#17202A] flex items-center gap-1.5 truncate">
-                  <span>{origin.nameTh}</span>
-                  <span className="text-xs font-normal text-[#66717D]">({origin.nameEn})</span>
+          {/* Right: Origin & Destination Inputs with Centered Swap */}
+          <div className="flex-1 space-y-2 min-w-0">
+            {/* Origin Button */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setModalMode('origin')}
+                className={`w-full text-left py-2 px-3 rounded-md border transition-all ${
+                  origin
+                    ? 'bg-white border-[#DDE2E7] text-[#17202A]'
+                    : 'bg-white border-dashed border-slate-300 text-slate-400 hover:border-slate-400'
+                }`}
+              >
+                <div className="text-[10px] font-bold text-[#2E9B68] uppercase tracking-wider">
+                  ต้นทาง / FROM
                 </div>
-                {origin.code && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 shrink-0 ml-2">
-                    {origin.code}
-                  </span>
+                {origin ? (
+                  <div className="flex items-center justify-between mt-0.5">
+                    <div className="font-semibold text-sm text-[#17202A] flex items-center gap-1.5 truncate">
+                      <span>{origin.nameTh}</span>
+                      <span className="text-xs font-normal text-[#66717D]">({origin.nameEn})</span>
+                    </div>
+                    {origin.code && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 shrink-0 ml-2">
+                        {origin.code}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-xs text-slate-400 font-normal">เลือกสถานีต้นทาง...</div>
                 )}
-              </div>
-            ) : (
-              <div className="text-xs text-slate-400 font-normal">เลือกสถานีต้นทาง...</div>
-            )}
-          </button>
-        </div>
-
-        {/* Swap Button In-Between */}
-        <div className="relative flex justify-end pr-2 -my-1 z-20">
-          <button
-            onClick={onSwap}
-            type="button"
-            disabled={!origin && !destination}
-            className="w-7 h-7 rounded-full bg-white border border-[#DDE2E7] text-slate-600 hover:text-[#3155D9] hover:border-[#3155D9] shadow-xs active:scale-95 transition-all flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
-            title="สลับต้นทาง-ปลายทาง"
-          >
-            <ArrowUpDown className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* Destination Input */}
-        <div className="relative pl-7">
-          <div className="absolute left-0 top-3 -translate-y-1/2 w-3 h-3 rounded-full bg-[#D94A55] ring-4 ring-[#D94A55]/15 z-10" />
-
-          <button
-            type="button"
-            onClick={() => setModalMode('destination')}
-            className={`w-full text-left py-2 px-3 rounded-md border transition-all ${
-              destination
-                ? 'bg-white border-[#DDE2E7] text-[#17202A]'
-                : 'bg-white border-dashed border-slate-300 text-slate-400 hover:border-slate-400'
-            }`}
-          >
-            <div className="text-[10px] font-bold text-[#D94A55] uppercase tracking-wider">
-              ปลายทาง / TO
+              </button>
             </div>
-            {destination ? (
-              <div className="flex items-center justify-between mt-0.5">
-                <div className="font-semibold text-sm text-[#17202A] flex items-center gap-1.5 truncate">
-                  <span>{destination.nameTh}</span>
-                  <span className="text-xs font-normal text-[#66717D]">({destination.nameEn})</span>
+
+            {/* Swap Button In-Between */}
+            <div className="flex justify-end pr-2 -my-1">
+              <button
+                onClick={onSwap}
+                type="button"
+                disabled={!origin && !destination}
+                className="w-7 h-7 rounded-full bg-white border border-[#DDE2E7] text-slate-600 hover:text-[#3155D9] hover:border-[#3155D9] shadow-xs active:scale-95 transition-all flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed"
+                title="สลับต้นทาง-ปลายทาง"
+              >
+                <ArrowUpDown className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Destination Button */}
+            <div>
+              <button
+                type="button"
+                onClick={() => setModalMode('destination')}
+                className={`w-full text-left py-2 px-3 rounded-md border transition-all ${
+                  destination
+                    ? 'bg-white border-[#DDE2E7] text-[#17202A]'
+                    : 'bg-white border-dashed border-slate-300 text-slate-400 hover:border-slate-400'
+                }`}
+              >
+                <div className="text-[10px] font-bold text-[#D94A55] uppercase tracking-wider">
+                  ปลายทาง / TO
                 </div>
-                {destination.code && (
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 shrink-0 ml-2">
-                    {destination.code}
-                  </span>
+                {destination ? (
+                  <div className="flex items-center justify-between mt-0.5">
+                    <div className="font-semibold text-sm text-[#17202A] flex items-center gap-1.5 truncate">
+                      <span>{destination.nameTh}</span>
+                      <span className="text-xs font-normal text-[#66717D]">({destination.nameEn})</span>
+                    </div>
+                    {destination.code && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 shrink-0 ml-2">
+                        {destination.code}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-xs text-slate-400 font-normal">เลือกสถานีปลายทาง...</div>
                 )}
-              </div>
-            ) : (
-              <div className="text-xs text-slate-400 font-normal">เลือกสถานีปลายทาง...</div>
-            )}
-          </button>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -136,7 +141,7 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
         <span>ค้นหาเส้นทาง (Find Route)</span>
       </button>
 
-      {/* Compact Quick Suggestions Row (Section 6) */}
+      {/* Compact Quick Suggestions Row */}
       <div className="space-y-1.5 pt-2 border-t border-slate-100">
         <div className="text-[11px] font-semibold text-[#66717D]">
           เส้นทางตัวอย่างยอดนิยม:
