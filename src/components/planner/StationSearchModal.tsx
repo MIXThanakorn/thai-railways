@@ -102,12 +102,12 @@ export const StationSearchModal: React.FC<StationSearchModalProps> = ({
           </div>
 
           {/* Quick Line Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+          <div className="flex items-center gap-1.5 overflow-x-auto py-2 px-1 text-xs scrollbar-none">
             <button
               onClick={() => setSelectedFilterLine('all')}
-              className={`px-3 py-1 rounded-full whitespace-nowrap font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-full whitespace-nowrap font-medium transition-all ${
                 selectedFilterLine === 'all'
-                  ? 'bg-slate-800 text-white shadow-sm'
+                  ? 'bg-slate-800 text-white shadow-xs font-bold'
                   : 'bg-white text-slate-600 hover:bg-slate-200 border border-slate-200'
               }`}
             >
@@ -117,9 +117,9 @@ export const StationSearchModal: React.FC<StationSearchModalProps> = ({
               <button
                 key={line.id}
                 onClick={() => setSelectedFilterLine(line.id)}
-                className={`px-2.5 py-1 rounded-full whitespace-nowrap flex items-center gap-1.5 font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-full whitespace-nowrap flex items-center gap-1.5 font-medium transition-all ${
                   selectedFilterLine === line.id
-                    ? 'ring-2 ring-offset-1 ring-slate-800 shadow-sm text-white'
+                    ? 'border-2 border-slate-800 shadow-xs font-bold text-white'
                     : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
                 }`}
                 style={
@@ -128,7 +128,12 @@ export const StationSearchModal: React.FC<StationSearchModalProps> = ({
                     : {}
                 }
               >
-                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: line.color }} />
+                <span
+                  className="w-2 h-2 rounded-full shrink-0"
+                  style={{
+                    backgroundColor: selectedFilterLine === line.id ? '#FFFFFF' : line.color,
+                  }}
+                />
                 <span>{line.name.replace('Line', '').replace('BTS', '').replace('MRT', '').trim()}</span>
               </button>
             ))}
