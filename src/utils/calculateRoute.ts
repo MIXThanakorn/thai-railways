@@ -64,23 +64,33 @@ class TransitGraph {
     if (!STATIONS[originId] || !STATIONS[destId]) return [];
     if (originId === destId) return [];
 
-    // Canonicalize if user selected interchange partner
-    const startStations = [originId];
-    const targetStations = [destId];
-
-    // Find paths using modified Dijkstra with transfer penalty
     const routes: RouteResult[] = [];
 
-    // Path 1: Optimal (balanced fewest transfers & time)
-    const bestPath = this.dijkstra(originId, destId, 360); // 6 min transfer penalty
+    // Path 1: Optimal (Fastest - standard transfer penalty 360s = 6 mins)
+    const bestPath = this.dijkstra(originId, destId, 360);
     if (bestPath && bestPath.length > 0) {
-      routes.push(this.formatRoute('recommended', 'Recommended Route', true, bestPath));
+      routes.push(this.formatRoute('route-1', 'เส้นทางแนะนำ (Recommended)', true, bestPath));
     }
 
-    // Path 2: Alternative (e.g., shortest station count or different line choice)
-    const minDistancePath = this.dijkstra(originId, destId, 60, bestPath); // low transfer penalty, avoid identical
-    if (minDistancePath && minDistancePath.length > 0 && !this.arePathsEqual(bestPath, minDistancePath)) {
-      routes.push(this.formatRoute('alternative', 'Alternative Route', false, minDistancePath));
+    // Path 2: Alternative (Fewest Transfers - heavy transfer penalty 900s = 15 mins)
+    const fewestTransferPath = this.dijkstra(originId, destId, 900);
+    if (
+      fewestTransferPath &&
+      fewestTransferPath.length > 0 &&
+      !this.arePathsEqual(bestPath, fewestTransferPath)
+    ) {
+      routes.push(this.formatRoute('route-2', 'เปลี่ยนสายน้อย (Fewer Transfers)', false, fewestTransferPath));
+    }
+
+    // Path 3: Alternative path avoiding middle edge of best path
+    const altPath = this.dijkstra(originId, destId, 180, bestPath);
+    if (
+      altPath &&
+      altPath.length > 0 &&
+      !this.arePathsEqual(bestPath, altPath) &&
+      !this.arePathsEqual(fewestTransferPath, altPath)
+    ) {
+      routes.push(this.formatRoute(`route-${routes.length + 1}`, 'เส้นทางเลือก (Alternative)', false, altPath));
     }
 
     return routes;

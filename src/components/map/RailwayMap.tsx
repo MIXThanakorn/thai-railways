@@ -4,8 +4,11 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { STATIONS } from '@/data/stations';
 import { RAILWAY_LINES } from '@/data/lines';
 import { CHAO_PHRAYA_RIVER_PATH, KHLONG_BANGKOK_YAI_PATH } from '@/data/river';
-import { Station, RouteResult, JourneyState } from '@/types/railway';
+import { Station, RouteResult, JourneyState, SystemFilter } from '@/types/railway';
+import { isLineInFilter, isStationInFilter } from '@/utils/filterRailwayLines';
+import { calculateRouteBounds } from '@/utils/calculateRouteBounds';
 import { MapControls } from './MapControls';
+import { MapLineFilter } from './MapLineFilter';
 import { TrainMarker } from './TrainMarker';
 
 interface RailwayMapProps {
@@ -15,6 +18,8 @@ interface RailwayMapProps {
   destStation: Station | null;
   onSelectStation: (station: Station) => void;
   selectedStation: Station | null;
+  systemFilter?: SystemFilter;
+  onFilterChange?: (filter: SystemFilter) => void;
 }
 
 interface ViewBox {
@@ -27,8 +32,8 @@ interface ViewBox {
 const DEFAULT_VIEWBOX: ViewBox = {
   x: 0,
   y: 0,
-  w: 1800,
-  h: 1800,
+  w: 1440,
+  h: 1440,
 };
 
 export const RailwayMap: React.FC<RailwayMapProps> = ({
@@ -38,6 +43,8 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
   destStation,
   onSelectStation,
   selectedStation,
+  systemFilter = 'all',
+  onFilterChange,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [viewBox, setViewBox] = useState<ViewBox>(DEFAULT_VIEWBOX);
@@ -52,8 +59,8 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
   // Zoom Controls
   const handleZoom = useCallback((factor: number) => {
     setViewBox((prev) => {
-      const nw = Math.min(Math.max(300, prev.w * factor), 2600);
-      const nh = Math.min(Math.max(300, prev.h * factor), 2600);
+      const nw = Math.min(Math.max(280, prev.w * factor), 2200);
+      const nh = Math.min(Math.max(280, prev.h * factor), 2200);
       return {
         x: prev.x + (prev.w - nw) / 2,
         y: prev.y + (prev.h - nh) / 2,
@@ -74,35 +81,12 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       return;
     }
 
-    const routeStations = activeRoute.stations.map((id) => STATIONS[id]).filter(Boolean);
-    if (routeStations.length === 0) {
+    const bounds = calculateRouteBounds(activeRoute.stations);
+    if (bounds) {
+      setViewBox(bounds.viewBox);
+    } else {
       handleReset();
-      return;
     }
-
-    let minX = Infinity;
-    let maxX = -Infinity;
-    let minY = Infinity;
-    let maxY = -Infinity;
-
-    routeStations.forEach((st) => {
-      if (st.x < minX) minX = st.x;
-      if (st.x > maxX) maxX = st.x;
-      if (st.y < minY) minY = st.y;
-      if (st.y > maxY) maxY = st.y;
-    });
-
-    const cx = (minX + maxX) / 2;
-    const cy = (minY + maxY) / 2;
-    const span = Math.max(maxX - minX, maxY - minY) + 300;
-    const dimension = Math.max(span, 650);
-
-    setViewBox({
-      x: cx - dimension / 2,
-      y: cy - dimension / 2,
-      w: dimension,
-      h: dimension,
-    });
   }, [activeRoute, handleReset]);
 
   useEffect(() => {
@@ -236,27 +220,27 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       textAnchor = 'end';
     } else if (pos === 'top') {
       lx = st.x;
-      ly = st.y - 14;
+      ly = st.y - 16;
       textAnchor = 'middle';
     } else if (pos === 'bottom') {
       lx = st.x;
-      ly = st.y + 18;
+      ly = st.y + 20;
       textAnchor = 'middle';
     } else if (pos === 'top-left') {
-      lx = st.x - 12;
-      ly = st.y - 10;
+      lx = st.x - 14;
+      ly = st.y - 12;
       textAnchor = 'end';
     } else if (pos === 'top-right') {
-      lx = st.x + 12;
-      ly = st.y - 10;
+      lx = st.x + 14;
+      ly = st.y - 12;
       textAnchor = 'start';
     } else if (pos === 'bottom-left') {
-      lx = st.x - 12;
-      ly = st.y + 16;
+      lx = st.x - 14;
+      ly = st.y + 18;
       textAnchor = 'end';
     } else if (pos === 'bottom-right') {
-      lx = st.x + 12;
-      ly = st.y + 16;
+      lx = st.x + 14;
+      ly = st.y + 18;
       textAnchor = 'start';
     }
 
@@ -273,10 +257,18 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full h-full bg-[#FFFFFF] border border-[#DDE2E7] rounded-xl overflow-hidden select-none cursor-grab active:cursor-grabbing ${
+      className={`relative w-full h-full bg-[#FFFFFF] sm:border sm:border-[#DDE2E7] rounded-none sm:rounded-xl overflow-hidden select-none cursor-grab active:cursor-grabbing ${
         isFullscreen ? 'fixed inset-0 z-50 rounded-none h-screen min-h-screen' : ''
       }`}
     >
+      {/* System Filter Pill Bar */}
+      {onFilterChange && (
+        <MapLineFilter
+          currentFilter={systemFilter}
+          onFilterChange={onFilterChange}
+        />
+      )}
+
       {/* Map Controls Toolbar */}
       <MapControls
         onZoomIn={() => handleZoom(0.8)}
@@ -289,7 +281,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       />
 
       {/* Map Status Tag */}
-      <div className="absolute bottom-3 left-3 z-20 pointer-events-none bg-white/95 px-3 py-1.5 rounded-md border border-[#DDE2E7] text-[11px] text-[#66717D]">
+      <div className="absolute bottom-24 sm:bottom-3 left-3 z-20 pointer-events-none bg-white/95 px-3 py-1.5 rounded-md border border-[#DDE2E7] text-[11px] text-[#66717D] shadow-sm">
         <span className="font-semibold text-[#17202A]">Bangkok Transit Map</span> · คลิกสถานีเพื่อดูข้อมูล
       </div>
 
@@ -322,7 +314,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
             d={CHAO_PHRAYA_RIVER_PATH}
             fill="none"
             stroke="#E0F2FE"
-            strokeWidth="30"
+            strokeWidth="32"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -342,13 +334,13 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
             strokeLinecap="round"
           />
           <text
-            x="620"
-            y="1140"
+            x="390"
+            y="760"
             fill="#0369A1"
-            fontSize="14"
+            fontSize="13"
             fontWeight="bold"
             opacity="0.6"
-            transform="rotate(65 620 1140)"
+            transform="rotate(90 390 760)"
             fontFamily="sans-serif"
           >
             CHAO PHRAYA RIVER
@@ -359,7 +351,14 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         {Object.values(RAILWAY_LINES).map((line) => {
           const hasRoute = activeRoute !== null;
           const isLineInActiveRoute = activeRoute?.segments.some((s) => s.lineId === line.id);
-          const lineOpacity = !hasRoute ? 1 : isLineInActiveRoute ? 1 : 0.18;
+          const isLineFiltered = isLineInFilter(line.id, systemFilter);
+
+          let lineOpacity = 1;
+          if (hasRoute) {
+            lineOpacity = isLineInActiveRoute ? 1 : isLineFiltered ? 0.20 : 0.08;
+          } else {
+            lineOpacity = isLineFiltered ? 1 : 0.18;
+          }
 
           const points = line.stations
             .map((stId) => {
@@ -442,13 +441,15 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
           </g>
         )}
 
-        {/* 3. Physical Interchange Walkways */}
-        <g opacity={activeRoute ? 0.3 : 0.7}>
-          <line x1="880" y1="660" x2="880" y2="660" stroke="#64748B" strokeWidth="3" strokeDasharray="3 3" />
-          <line x1="1120" y1="970" x2="1140" y2="970" stroke="#64748B" strokeWidth="3" strokeDasharray="3 3" />
-          <line x1="910" y1="1060" x2="1020" y2="1070" stroke="#64748B" strokeWidth="3" strokeDasharray="3 3" />
-          <line x1="1140" y1="910" x2="1140" y2="910" stroke="#64748B" strokeWidth="3" strokeDasharray="3 3" />
-          <line x1="770" y1="690" x2="770" y2="690" stroke="#64748B" strokeWidth="3" strokeDasharray="3 3" />
+        {/* 3. Physical Interchange Walkway Capsules (Mo Chit / Chatuchak, Ha Yaek Lat Phrao / Phahon Yothin) */}
+        <g opacity={activeRoute ? 0.35 : 0.95}>
+          {/* Mo Chit <-> Chatuchak Park Capsule Link */}
+          <rect x="690" y="571" width="50" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2.5" />
+          <line x1="700" y1="580" x2="730" y2="580" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          
+          {/* Ha Yaek Lat Phrao <-> Phahon Yothin Capsule Link */}
+          <rect x="690" y="531" width="50" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2.5" />
+          <line x1="700" y1="540" x2="730" y2="540" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
         </g>
 
         {/* 4. Station Nodes & Labels */}
@@ -459,11 +460,18 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
           const isInterchange = st.type === 'interchange' || st.lines.length > 1;
           const isSelected = selectedStation?.id === st.id;
           const isHovered = hoveredStation?.id === st.id;
+          const isStationFiltered = isStationInFilter(st.lines, systemFilter);
 
           const primaryLine = RAILWAY_LINES[st.lines[0]];
           const primaryColor = primaryLine ? primaryLine.color : '#64748B';
 
-          const nodeOpacity = !activeRoute ? 1 : isInRoute ? 1 : 0.22;
+          let nodeOpacity = 1;
+          if (activeRoute) {
+            nodeOpacity = isInRoute ? 1 : isStationFiltered ? 0.22 : 0.10;
+          } else {
+            nodeOpacity = isStationFiltered ? 1 : 0.20;
+          }
+
           const { lx, ly, textAnchor } = getLabelCoords(st);
 
           return (
@@ -512,7 +520,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
               )}
 
               {/* Station Code Badge */}
-              {st.code && (isInterchange || viewBox.w < 1200) && (
+              {st.code && (isInterchange || viewBox.w < 1300) && (
                 <g transform={`translate(${st.x}, ${st.y - 12})`}>
                   <rect
                     x="-13"

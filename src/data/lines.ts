@@ -139,7 +139,7 @@ export const RAILWAY_LINES: Record<string, RailwayLine> = {
       'sam-yot',
       'sanam-chai',
       'itsaraphap',
-      'tha-phra-loop', // Junction representation
+      'tha-phra',
       'bang-phai',
       'bang-wa-mrt',
       'phetkasem-48',

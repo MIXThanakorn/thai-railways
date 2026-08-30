@@ -45,9 +45,13 @@ export interface TransferInfo {
   estimatedMinutes: number;
 }
 
+export type RoutePreference = 'fastest' | 'fewest-transfers' | 'fewest-stations';
+export type SystemFilter = 'all' | 'bts' | 'mrt' | 'arl' | 'srt';
+
 export interface RouteResult {
   id: string;
   name: string;
+  tag?: string; // e.g. '⚡ Fastest', '🔄 Fewest Transfers', '🚉 Fewest Stations', 'Alternative'
   isRecommended: boolean;
   stations: string[]; // All station IDs in order
   segments: RouteSegment[];
