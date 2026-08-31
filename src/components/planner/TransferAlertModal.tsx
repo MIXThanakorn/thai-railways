@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { RefreshCw, ArrowRight, Clock } from 'lucide-react';
 import { TransferInfo } from '@/types/railway';
-import { STATIONS } from '@/data/stations';
-import { RAILWAY_LINES } from '@/data/lines';
+import { formatTransferInstruction } from '@/utils/getTransferInstruction';
 
 interface TransferAlertModalProps {
   transfer: TransferInfo | null;
@@ -15,16 +14,16 @@ export const TransferAlertModal: React.FC<TransferAlertModalProps> = ({
   transfer,
   onContinue,
 }) => {
-  const [timeLeft, setTimeLeft] = useState(2.0);
+  const [timeLeft, setTimeLeft] = useState(2.5);
 
-  // Auto resume after 2 seconds
+  // Auto resume after 2.5 seconds
   useEffect(() => {
     if (!transfer) {
-      setTimeLeft(2.0);
+      setTimeLeft(2.5);
       return;
     }
 
-    setTimeLeft(2.0);
+    setTimeLeft(2.5);
     const interval = 50; // update progress every 50ms
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -42,10 +41,8 @@ export const TransferAlertModal: React.FC<TransferAlertModalProps> = ({
 
   if (!transfer) return null;
 
-  const station = STATIONS[transfer.stationId];
-  const fromLine = RAILWAY_LINES[transfer.fromLineId];
-  const toLine = RAILWAY_LINES[transfer.toLineId];
-  const progressPercent = Math.max(0, Math.min(100, ((2.0 - timeLeft) / 2.0) * 100));
+  const info = formatTransferInstruction(transfer);
+  const progressPercent = Math.max(0, Math.min(100, ((2.5 - timeLeft) / 2.5) * 100));
 
   return (
     <div
@@ -54,10 +51,10 @@ export const TransferAlertModal: React.FC<TransferAlertModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white max-w-sm w-full rounded-xl shadow-2xl border border-[#DDE2E7] p-5 space-y-3.5 animate-in zoom-in-95 duration-200 overflow-hidden relative"
+        className="bg-white max-w-sm w-full rounded-2xl shadow-2xl border border-[#DDE2E7] p-5 space-y-3.5 animate-in zoom-in-95 duration-200 overflow-hidden relative"
       >
-        {/* Animated Top Progress Bar (2 seconds) */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-slate-100">
+        {/* Animated Top Progress Bar */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-slate-100">
           <div
             className="h-full bg-[#3155D9] transition-all duration-75 ease-linear"
             style={{ width: `${progressPercent}%` }}
@@ -66,39 +63,43 @@ export const TransferAlertModal: React.FC<TransferAlertModalProps> = ({
 
         {/* Header */}
         <div className="flex items-center gap-3 pt-1">
-          <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
             <RefreshCw className="w-5 h-5 animate-spin" style={{ animationDuration: '2.5s' }} />
           </div>
           <div className="min-w-0">
             <div className="text-[10px] font-bold uppercase tracking-wider text-amber-700">
-              กำลังเปลี่ยนสาย (~2 วิ)
+              จุดเปลี่ยนสาย (CHANGE LINE)
             </div>
             <h3 className="text-base font-bold text-[#17202A] truncate">
-              {station ? station.nameTh : 'สถานีเปลี่ยนขบวน'}
+              {info.stationNameTh}
             </h3>
-            <p className="text-xs text-[#66717D] truncate">{station?.nameEn}</p>
+            <p className="text-xs text-[#66717D] truncate">{info.stationNameEn}</p>
           </div>
         </div>
 
-        {/* Transfer Visual Direction */}
-        <div className="bg-[#F8FAFC] p-3 rounded-lg border border-[#DDE2E7] space-y-2">
+        {/* Clear Transfer Direction Guidance */}
+        <div className="bg-[#F8FAFC] p-3 rounded-xl border border-[#DDE2E7] space-y-2.5">
+          <div className="text-xs font-semibold text-slate-700 leading-snug">
+            {info.instructionTh}
+          </div>
+
           <div className="flex items-center justify-between gap-1.5 text-xs">
             {/* From Line */}
             <div
-              className="flex-1 p-2 rounded-md text-white font-bold text-center truncate"
-              style={{ backgroundColor: fromLine?.color || '#64748B' }}
+              className="flex-1 p-2 rounded-lg text-white font-bold text-center truncate shadow-2xs"
+              style={{ backgroundColor: info.fromLineColor }}
             >
-              <div className="text-[11px] truncate">{fromLine?.nameTh}</div>
+              <div className="text-[11px] truncate">{info.fromLineNameTh}</div>
             </div>
 
             <ArrowRight className="w-4 h-4 text-slate-400 shrink-0" />
 
             {/* To Line */}
             <div
-              className="flex-1 p-2 rounded-md text-white font-bold text-center truncate"
-              style={{ backgroundColor: toLine?.color || '#64748B' }}
+              className="flex-1 p-2 rounded-lg text-white font-bold text-center truncate shadow-2xs"
+              style={{ backgroundColor: info.toLineColor }}
             >
-              <div className="text-[11px] truncate">{toLine?.nameTh}</div>
+              <div className="text-[11px] truncate">{info.toLineNameTh}</div>
             </div>
           </div>
 
@@ -108,17 +109,17 @@ export const TransferAlertModal: React.FC<TransferAlertModalProps> = ({
               <span>เดินเปลี่ยนชานชาลา ~5 นาที</span>
             </span>
             <span className="text-[10px] font-semibold text-[#3155D9]">
-              ต่อสายใหม่อัตโนมัติ...
+              {Math.ceil(timeLeft)}s...
             </span>
           </div>
         </div>
 
-        {/* Quick Skip Button */}
+        {/* Skip Button */}
         <button
           onClick={onContinue}
-          className="w-full py-2 px-3 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-[#17202A] font-semibold text-xs rounded-lg transition-colors flex items-center justify-center gap-1.5"
+          className="w-full py-2.5 px-3 bg-[#17202A] hover:bg-slate-800 text-white font-semibold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-xs"
         >
-          <span>ไปต่อทันที (Skip)</span>
+          <span>ไปต่อทันที (Continue)</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>

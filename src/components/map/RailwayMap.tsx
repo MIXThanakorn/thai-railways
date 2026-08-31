@@ -7,6 +7,7 @@ import { CHAO_PHRAYA_RIVER_PATH, KHLONG_BANGKOK_YAI_PATH } from '@/data/river';
 import { Station, RouteResult, JourneyState, SystemFilter } from '@/types/railway';
 import { isLineInFilter, isStationInFilter } from '@/utils/filterRailwayLines';
 import { calculateRouteBounds } from '@/utils/calculateRouteBounds';
+import { calculateStationBounds } from '@/utils/focusStation';
 import { MapControls } from './MapControls';
 import { MapLineFilter } from './MapLineFilter';
 import { TrainMarker } from './TrainMarker';
@@ -20,6 +21,8 @@ interface RailwayMapProps {
   selectedStation: Station | null;
   systemFilter?: SystemFilter;
   onFilterChange?: (filter: SystemFilter) => void;
+  focusedStationId?: string | null;
+  hoveredTimelineStationId?: string | null;
 }
 
 interface ViewBox {
@@ -45,6 +48,8 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
   selectedStation,
   systemFilter = 'all',
   onFilterChange,
+  focusedStationId,
+  hoveredTimelineStationId,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [viewBox, setViewBox] = useState<ViewBox>(DEFAULT_VIEWBOX);
@@ -94,6 +99,16 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       handleFocusRoute();
     }
   }, [activeRoute, handleFocusRoute]);
+
+  // Focus on specific station when triggered from timeline
+  useEffect(() => {
+    if (focusedStationId) {
+      const bounds = calculateStationBounds(focusedStationId);
+      if (bounds) {
+        setViewBox(bounds);
+      }
+    }
+  }, [focusedStationId]);
 
   // Wheel zoom
   const handleWheel = (e: React.WheelEvent) => {
@@ -224,23 +239,23 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       textAnchor = 'middle';
     } else if (pos === 'bottom') {
       lx = st.x;
-      ly = st.y + 20;
+      ly = st.y + 17;
       textAnchor = 'middle';
     } else if (pos === 'top-left') {
       lx = st.x - 14;
-      ly = st.y - 12;
+      ly = st.y - 11;
       textAnchor = 'end';
     } else if (pos === 'top-right') {
       lx = st.x + 14;
-      ly = st.y - 12;
+      ly = st.y - 11;
       textAnchor = 'start';
     } else if (pos === 'bottom-left') {
       lx = st.x - 14;
-      ly = st.y + 18;
+      ly = st.y + 16;
       textAnchor = 'end';
     } else if (pos === 'bottom-right') {
       lx = st.x + 14;
-      ly = st.y + 18;
+      ly = st.y + 16;
       textAnchor = 'start';
     }
 
@@ -257,7 +272,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full h-full bg-[#FFFFFF] sm:border sm:border-[#DDE2E7] rounded-none sm:rounded-xl overflow-hidden select-none cursor-grab active:cursor-grabbing ${
+      className={`relative w-full h-full bg-white sm:border sm:border-[#E3E8EF] rounded-none sm:rounded-xl overflow-hidden select-none cursor-grab active:cursor-grabbing ${
         isFullscreen ? 'fixed inset-0 z-50 rounded-none h-screen min-h-screen' : ''
       }`}
     >
@@ -281,8 +296,8 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
       />
 
       {/* Map Status Tag */}
-      <div className="absolute bottom-24 sm:bottom-3 left-3 z-20 pointer-events-none bg-white/95 px-3 py-1.5 rounded-md border border-[#DDE2E7] text-[11px] text-[#66717D] shadow-sm">
-        <span className="font-semibold text-[#17202A]">Bangkok Transit Map</span> · คลิกสถานีเพื่อดูข้อมูล
+      <div className="absolute bottom-24 sm:bottom-3 left-3 z-20 pointer-events-none bg-white/90 px-2 py-1 rounded border border-[#EDF0F3] text-[9px] text-[#8A949E] shadow-none">
+        <span className="font-medium text-[#68737F]">Bangkok Transit</span> · คลิกสถานีเพื่อดูข้อมูล
       </div>
 
       {/* Scalable SVG Canvas with Native ViewBox */}
@@ -295,49 +310,48 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         style={{ touchAction: 'none' }}
       >
         <defs>
-          <pattern id="subtleGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F1F4F8" strokeWidth="0.75" />
-          </pattern>
-
-          <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          <filter id="routeGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
           </filter>
         </defs>
 
-        {/* Background Grid */}
-        <rect x="-1000" y="-1000" width="4000" height="4000" fill="url(#subtleGrid)" />
+        {/* Clean paper-like background. The reference map uses a plain white canvas. */}
+        <rect x="-1000" y="-1000" width="4000" height="4000" fill="#FFFFFF" />
 
         {/* Chao Phraya River */}
         <g opacity="0.95">
           <path
             d={CHAO_PHRAYA_RIVER_PATH}
             fill="none"
-            stroke="#E0F2FE"
-            strokeWidth="32"
+            stroke="#EAF5FC"
+            strokeWidth="28"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d={CHAO_PHRAYA_RIVER_PATH}
             fill="none"
-            stroke="#BAE6FD"
-            strokeWidth="20"
+            stroke="#D6ECF8"
+            strokeWidth="17"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d={KHLONG_BANGKOK_YAI_PATH}
             fill="none"
-            stroke="#BAE6FD"
-            strokeWidth="12"
+            stroke="#D6ECF8"
+            strokeWidth="9"
             strokeLinecap="round"
           />
           <text
             x="390"
             y="760"
-            fill="#0369A1"
-            fontSize="13"
+            fill="#A5C8DE"
+            fontSize="10"
             fontWeight="bold"
             opacity="0.6"
             transform="rotate(90 390 760)"
@@ -355,9 +369,9 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
 
           let lineOpacity = 1;
           if (hasRoute) {
-            lineOpacity = isLineInActiveRoute ? 1 : isLineFiltered ? 0.20 : 0.08;
+            lineOpacity = isLineInActiveRoute ? 1 : isLineFiltered ? 0.16 : 0.06;
           } else {
-            lineOpacity = isLineFiltered ? 1 : 0.18;
+            lineOpacity = isLineFiltered ? 1 : 0.12;
           }
 
           const points = line.stations
@@ -375,7 +389,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                 points={points}
                 fill="none"
                 stroke="#FFFFFF"
-                strokeWidth="10"
+                strokeWidth="8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -384,7 +398,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                 points={points}
                 fill="none"
                 stroke={line.color}
-                strokeWidth="6"
+                strokeWidth="5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -411,10 +425,10 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                     points={segPoints}
                     fill="none"
                     stroke={segment.lineColor}
-                    strokeWidth="14"
+                    strokeWidth="10"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    opacity="0.35"
+                    opacity="0.22"
                     filter="url(#routeGlow)"
                   />
                   {/* White track base */}
@@ -422,7 +436,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                     points={segPoints}
                     fill="none"
                     stroke="#FFFFFF"
-                    strokeWidth="10"
+                    strokeWidth="8"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -431,7 +445,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                     points={segPoints}
                     fill="none"
                     stroke={segment.lineColor}
-                    strokeWidth="6.5"
+                    strokeWidth="5.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -441,15 +455,23 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
           </g>
         )}
 
-        {/* 3. Physical Interchange Walkway Capsules (Mo Chit / Chatuchak, Ha Yaek Lat Phrao / Phahon Yothin) */}
+        {/* 3. Physical Interchange Walkway Capsules */}
         <g opacity={activeRoute ? 0.35 : 0.95}>
+          {/* Krung Thep Aphiwat (SRT) <-> Bang Sue (MRT) Walkway Link */}
+          <rect x="591" y="461" width="18" height="78" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="600" y1="470" x2="600" y2="530" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+
           {/* Mo Chit <-> Chatuchak Park Capsule Link */}
-          <rect x="690" y="571" width="50" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2.5" />
-          <line x1="700" y1="580" x2="730" y2="580" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="665" y="611" width="66" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="675" y1="620" x2="720" y2="620" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
           
           {/* Ha Yaek Lat Phrao <-> Phahon Yothin Capsule Link */}
-          <rect x="690" y="531" width="50" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2.5" />
-          <line x1="700" y1="540" x2="730" y2="540" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="710" y="561" width="66" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="720" y1="570" x2="765" y2="570" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+
+          {/* Makkasan (ARL) <-> Phetchaburi (MRT) Walkway Link */}
+          <rect x="876" y="781" width="18" height="38" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="885" y1="790" x2="885" y2="810" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
         </g>
 
         {/* 4. Station Nodes & Labels */}
@@ -459,7 +481,7 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
           const isInRoute = activeStationIds.has(st.id);
           const isInterchange = st.type === 'interchange' || st.lines.length > 1;
           const isSelected = selectedStation?.id === st.id;
-          const isHovered = hoveredStation?.id === st.id;
+          const isHovered = hoveredStation?.id === st.id || hoveredTimelineStationId === st.id;
           const isStationFiltered = isStationInFilter(st.lines, systemFilter);
 
           const primaryLine = RAILWAY_LINES[st.lines[0]];
@@ -467,9 +489,9 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
 
           let nodeOpacity = 1;
           if (activeRoute) {
-            nodeOpacity = isInRoute ? 1 : isStationFiltered ? 0.22 : 0.10;
+            nodeOpacity = isInRoute || isHovered ? 1 : isStationFiltered ? 0.22 : 0.10;
           } else {
-            nodeOpacity = isStationFiltered ? 1 : 0.20;
+            nodeOpacity = isStationFiltered || isHovered ? 1 : 0.20;
           }
 
           const { lx, ly, textAnchor } = getLabelCoords(st);
@@ -486,6 +508,18 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
               onMouseLeave={() => setHoveredStation(null)}
               className="cursor-pointer"
             >
+              {/* Highlight Aura if Hovered from Timeline or Map */}
+              {isHovered && (
+                <circle
+                  cx={st.x}
+                  cy={st.y}
+                  r="14"
+                  fill="#3155D9"
+                  opacity="0.18"
+                  className="animate-pulse"
+                />
+              )}
+
               {/* Node Symbol */}
               {isInterchange ? (
                 /* Interchange Node */
@@ -493,15 +527,15 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                   <circle
                     cx={st.x}
                     cy={st.y}
-                    r={isSelected || isHovered ? 11 : 9}
+                    r={isSelected || isHovered ? 9 : 7}
                     fill="#FFFFFF"
-                    stroke="#17202A"
-                    strokeWidth="3"
+                    stroke={primaryColor}
+                    strokeWidth="2"
                   />
                   <circle
                     cx={st.x}
                     cy={st.y}
-                    r="4"
+                    r="3"
                     fill={primaryColor}
                   />
                 </g>
@@ -511,33 +545,31 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                   <circle
                     cx={st.x}
                     cy={st.y}
-                    r={isSelected || isHovered ? 7.5 : 5}
+                    r={isSelected || isHovered ? 6.5 : 4}
                     fill="#FFFFFF"
                     stroke={primaryColor}
-                    strokeWidth="2.5"
+                    strokeWidth="2"
                   />
                 </g>
               )}
 
-              {/* Station Code Badge */}
-              {st.code && (isInterchange || viewBox.w < 1300) && (
-                <g transform={`translate(${st.x}, ${st.y - 12})`}>
-                  <rect
-                    x="-13"
-                    y="-9"
-                    width="26"
-                    height="11"
-                    rx="3"
-                    fill={primaryColor}
+              {/* Station Code */}
+              {st.code && (isInterchange || viewBox.w < 1180) && (
+                <g transform={`translate(${st.x}, ${st.y})`}>
+                  <circle
+                    r={isInterchange ? 8 : 6}
+                    fill="#FFFFFF"
+                    stroke={primaryColor}
+                    strokeWidth={isInterchange ? 1.8 : 1.4}
                   />
                   <text
                     x="0"
-                    y="-1"
-                    fill="#FFFFFF"
-                    fontSize="7.5"
-                    fontWeight="bold"
+                    y="2.5"
+                    fill={primaryColor}
+                    fontSize={isInterchange ? "6" : "5.2"}
+                    fontWeight="700"
                     textAnchor="middle"
-                    fontFamily="sans-serif"
+                    fontFamily="Arial, sans-serif"
                   >
                     {st.code}
                   </text>
@@ -552,10 +584,10 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                   y="0"
                   fill="none"
                   stroke="#FFFFFF"
-                  strokeWidth="4"
+                  strokeWidth="2.5"
                   strokeLinejoin="round"
-                  fontSize={isInterchange ? '11' : '9.5'}
-                  fontWeight={isInterchange ? 'bold' : '600'}
+                  fontSize={isInterchange ? '9.5' : '8'}
+                  fontWeight={isInterchange ? '700' : '500'}
                   textAnchor={textAnchor}
                   fontFamily="'Prompt', sans-serif"
                 >
@@ -564,9 +596,9 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                 <text
                   x="0"
                   y="0"
-                  fill={isInRoute || !activeRoute ? '#17202A' : '#66717D'}
-                  fontSize={isInterchange ? '11' : '9.5'}
-                  fontWeight={isInterchange ? 'bold' : '600'}
+                  fill={isInRoute || !activeRoute || isHovered ? '#1F2933' : '#7B858F'}
+                  fontSize={isInterchange ? '9.5' : '8'}
+                  fontWeight={isInterchange || isHovered ? 'bold' : '600'}
                   textAnchor={textAnchor}
                   fontFamily="'Prompt', sans-serif"
                 >
@@ -579,10 +611,10 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                   y="10"
                   fill="none"
                   stroke="#FFFFFF"
-                  strokeWidth="3"
+                  strokeWidth="2.5"
                   strokeLinejoin="round"
-                  fontSize={isInterchange ? '8.5' : '7.5'}
-                  fontWeight="500"
+                  fontSize={isInterchange ? '7.5' : '6.5'}
+                  fontWeight="400"
                   textAnchor={textAnchor}
                   fontFamily="'Plus Jakarta Sans', sans-serif"
                 >
@@ -591,9 +623,9 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
                 <text
                   x="0"
                   y="10"
-                  fill={isInRoute || !activeRoute ? '#66717D' : '#8A949E'}
-                  fontSize={isInterchange ? '8.5' : '7.5'}
-                  fontWeight="500"
+                  fill={isInRoute || !activeRoute || isHovered ? '#7B858F' : '#A3ABB3'}
+                  fontSize={isInterchange ? '7.5' : '6.5'}
+                  fontWeight="400"
                   textAnchor={textAnchor}
                   fontFamily="'Plus Jakarta Sans', sans-serif"
                 >
@@ -607,11 +639,11 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         {/* 5. Origin Marker (Green Pin) */}
         {originStation && (
           <g transform={`translate(${originStation.x}, ${originStation.y})`} className="pointer-events-none z-20">
-            <circle r="16" fill="#2E9B68" opacity="0.3" className="animate-ping" />
-            <circle r="10" fill="#2E9B68" stroke="#FFFFFF" strokeWidth="2.5" />
-            <g transform="translate(0, -26)">
-              <rect x="-28" y="-11" width="56" height="16" rx="3" fill="#2E9B68" />
-              <text x="0" y="1" fill="#FFFFFF" fontSize="9" fontWeight="bold" textAnchor="middle">
+            <circle r="13" fill="#2E9B68" opacity="0.16" className="animate-ping" />
+            <circle r="10" fill="#2E9B68" stroke="#FFFFFF" strokeWidth="2" />
+            <g transform="translate(0, -21)">
+              <rect x="-25" y="-10" width="50" height="14" rx="3" fill="#2E9B68" />
+              <text x="0" y="1" fill="#FFFFFF" fontSize="7" fontWeight="700" textAnchor="middle">
                 ORIGIN
               </text>
             </g>
@@ -621,11 +653,11 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         {/* 6. Destination Marker (Red Pin) */}
         {destStation && (
           <g transform={`translate(${destStation.x}, ${destStation.y})`} className="pointer-events-none z-20">
-            <circle r="16" fill="#D94A55" opacity="0.3" className="animate-ping" />
-            <circle r="10" fill="#D94A55" stroke="#FFFFFF" strokeWidth="2.5" />
-            <g transform="translate(0, -26)">
-              <rect x="-30" y="-11" width="60" height="16" rx="3" fill="#D94A55" />
-              <text x="0" y="1" fill="#FFFFFF" fontSize="9" fontWeight="bold" textAnchor="middle">
+            <circle r="13" fill="#D94A55" opacity="0.16" className="animate-ping" />
+            <circle r="10" fill="#D94A55" stroke="#FFFFFF" strokeWidth="2" />
+            <g transform="translate(0, -21)">
+              <rect x="-27" y="-10" width="54" height="14" rx="3" fill="#D94A55" />
+              <text x="0" y="1" fill="#FFFFFF" fontSize="7" fontWeight="700" textAnchor="middle">
                 DESTINATION
               </text>
             </g>

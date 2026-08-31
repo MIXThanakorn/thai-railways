@@ -8,7 +8,7 @@ import { RouteComparison } from '@/components/planner/RouteComparison';
 import { RouteSummary } from '@/components/planner/RouteSummary';
 import { RouteTimeline } from '@/components/planner/RouteTimeline';
 import { JourneyControls } from '@/components/planner/JourneyControls';
-import { ChevronUp, ChevronDown, Clock, Navigation, Play, Search, X } from 'lucide-react';
+import { ChevronUp, ChevronDown, Play, Search, RotateCcw } from 'lucide-react';
 
 interface MobileBottomSheetProps {
   originStation: Station | null;
@@ -18,6 +18,7 @@ interface MobileBottomSheetProps {
   onSwap: () => void;
   onFindRoute: () => void;
   onSelectPreset: (originId: string, destId: string) => void;
+  onNewJourney?: () => void;
   hasSearched: boolean;
   sameStationError: boolean;
   routePreference: RoutePreference;
@@ -33,6 +34,7 @@ interface MobileBottomSheetProps {
   onChangeSpeed: (speed: number) => void;
   onSeekStation: (index: number) => void;
   onSelectStationDetails: (st: Station) => void;
+  onFocusStation?: (stationId: string) => void;
 }
 
 export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
@@ -43,6 +45,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
   onSwap,
   onFindRoute,
   onSelectPreset,
+  onNewJourney,
   hasSearched,
   sameStationError,
   routePreference,
@@ -58,6 +61,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
   onChangeSpeed,
   onSeekStation,
   onSelectStationDetails,
+  onFocusStation,
 }) => {
   // State: 'collapsed' | 'expanded'
   const [isExpanded, setIsExpanded] = useState(false);
@@ -75,7 +79,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
       {/* Floating Bottom Sheet */}
       <div
         className={`fixed left-0 right-0 bottom-0 z-40 bg-white rounded-t-3xl border-t border-slate-200 shadow-2xl transition-all duration-300 ease-out lg:hidden flex flex-col ${
-          isExpanded ? 'h-[85vh] max-h-[85vh]' : 'h-auto max-h-[170px]'
+          isExpanded ? 'h-[85vh] max-h-[85vh]' : 'h-auto max-h-[175px]'
         }`}
       >
         {/* Drag Handle & Header Banner */}
@@ -143,7 +147,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
         {/* Collapsed Quick Actions Bar */}
         {!isExpanded && activeRoute && (
           <div className="px-4 py-2.5 flex items-center justify-between gap-2.5 bg-white">
-            <div className="flex items-center gap-2 text-xs text-slate-600">
+            <div className="flex items-center gap-2 text-xs text-slate-600 truncate">
               <span className="font-bold text-slate-900">{activeRoute.totalStations} สถานี</span>
               <span>·</span>
               <span>{activeRoute.transfers.length > 0 ? `เปลี่ยนสาย ${activeRoute.transfers.length} ครั้ง` : 'ต่อเดียว'}</span>
@@ -155,13 +159,25 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
               )}
             </div>
 
-            <button
-              onClick={onStartJourney}
-              className="py-1.5 px-3 bg-[#17202A] text-white hover:bg-slate-800 text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 shrink-0"
-            >
-              <Play className="w-3.5 h-3.5 fill-white" />
-              <span>จำลอง</span>
-            </button>
+            <div className="flex items-center gap-1.5 shrink-0">
+              {onNewJourney && (
+                <button
+                  onClick={onNewJourney}
+                  className="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg"
+                  title="เริ่มการค้นหาใหม่ (New Journey)"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                </button>
+              )}
+
+              <button
+                onClick={onStartJourney}
+                className="py-1.5 px-3 bg-[#17202A] text-white hover:bg-slate-800 text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5"
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>จำลอง</span>
+              </button>
+            </div>
           </div>
         )}
 
@@ -177,8 +193,15 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
               onSwap={onSwap}
               onFindRoute={() => {
                 onFindRoute();
+                setIsExpanded(false);
               }}
-              onSelectPreset={onSelectPreset}
+              onSelectPreset={(orig, dest) => {
+                onSelectPreset(orig, dest);
+                setIsExpanded(false);
+              }}
+              onNewJourney={() => {
+                if (onNewJourney) onNewJourney();
+              }}
               hasSearched={hasSearched}
             />
 
@@ -230,7 +253,7 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                 onSelectRouteIndex={onSelectRouteIndex}
                 onStartJourney={() => {
                   onStartJourney();
-                  setIsExpanded(false); // Collapse bottom sheet so user can watch train on map!
+                  setIsExpanded(false);
                 }}
                 isJourneyActive={journeyState.isPlaying}
               />
@@ -243,6 +266,10 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
                 journeyState={journeyState}
                 onSeekStation={onSeekStation}
                 onSelectStation={onSelectStationDetails}
+                onFocusStation={(stId) => {
+                  if (onFocusStation) onFocusStation(stId);
+                  setIsExpanded(false);
+                }}
               />
             )}
           </div>

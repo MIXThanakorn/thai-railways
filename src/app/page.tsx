@@ -33,6 +33,10 @@ export default function HomePage() {
   const [destStation, setDestStation] = useState<Station | null>(null);
   const [sameStationError, setSameStationError] = useState(false);
 
+  // Focus & Synchronization States between Timeline and Map
+  const [focusedStationId, setFocusedStationId] = useState<string | null>(null);
+  const [hoveredTimelineStationId, setHoveredTimelineStationId] = useState<string | null>(null);
+
   // Preference and System Filter States (Session-only Client State)
   const [routePreference, setRoutePreference] = useState<RoutePreference>('fastest');
   const [systemFilter, setSystemFilter] = useState<SystemFilter>('all');
@@ -70,6 +74,7 @@ export default function HomePage() {
     setRoutes(ranked);
     setSelectedRouteIndex(0);
     setHasSearched(true);
+    setFocusedStationId(null);
 
     if (ranked.length > 0) {
       setJourneyState({
@@ -138,6 +143,7 @@ export default function HomePage() {
       setOriginStation(orig);
       setDestStation(dest);
       setSameStationError(false);
+      setFocusedStationId(null);
       const calculated = calculateRoute(orig.id, dest.id);
       const ranked = rankRoutes(calculated, routePreference);
       setRoutes(ranked);
@@ -156,12 +162,35 @@ export default function HomePage() {
     }
   };
 
+  // Clear / New Journey Action
+  const handleNewJourney = () => {
+    setOriginStation(null);
+    setDestStation(null);
+    setRoutes([]);
+    setSelectedRouteIndex(0);
+    setHasSearched(false);
+    setSameStationError(false);
+    setFocusedStationId(null);
+    setHoveredTimelineStationId(null);
+    setJourneyState({
+      currentStationIndex: 0,
+      currentStationId: '',
+      isPlaying: false,
+      speed: 1,
+      progress: 0,
+      isTransferring: false,
+      activeTransfer: null,
+      isCompleted: false,
+    });
+  };
+
   // Swap Origin and Destination
   const handleSwap = () => {
     const temp = originStation;
     setOriginStation(destStation);
     setDestStation(temp);
     setSameStationError(false);
+    setFocusedStationId(null);
     if (destStation && temp) {
       const calculated = calculateRoute(destStation.id, temp.id);
       const ranked = rankRoutes(calculated, routePreference);
@@ -281,6 +310,7 @@ export default function HomePage() {
   // Route selection change from comparison cards
   const handleSelectRouteIndex = (idx: number) => {
     setSelectedRouteIndex(idx);
+    setFocusedStationId(null);
     if (routes[idx]) {
       setJourneyState((prev) => ({
         ...prev,
@@ -317,14 +347,17 @@ export default function HomePage() {
             onSelectOrigin={(st) => {
               setOriginStation(st);
               setSameStationError(false);
+              setFocusedStationId(null);
             }}
             onSelectDestination={(st) => {
               setDestStation(st);
               setSameStationError(false);
+              setFocusedStationId(null);
             }}
             onSwap={handleSwap}
             onFindRoute={handleFindRoute}
             onSelectPreset={handleSelectPreset}
+            onNewJourney={handleNewJourney}
             hasSearched={hasSearched}
           />
 
@@ -357,7 +390,7 @@ export default function HomePage() {
           )}
 
           {/* Active Simulation Controls Bar */}
-          {activeRoute && journeyState.isPlaying && (
+          {activeRoute && (journeyState.isPlaying || journeyState.isCompleted || journeyState.currentStationIndex > 0) && (
             <JourneyControls
               journeyState={journeyState}
               activeRoute={activeRoute}
@@ -388,12 +421,15 @@ export default function HomePage() {
                 journeyState={journeyState}
                 onSeekStation={handleSeekStation}
                 onSelectStation={(st) => setSelectedStationDetails(st)}
+                onFocusStation={(stId) => setFocusedStationId(stId)}
+                onHoverStation={(stId) => setHoveredTimelineStationId(stId)}
+                hoveredStationId={hoveredTimelineStationId}
               />
             </div>
           )}
         </aside>
 
-        {/* Right Column: Full-height / Seamless Map Canvas on Mobile */}
+        {/* Right Column: Full-height / Seamless Map Canvas */}
         <section className="flex-1 flex flex-col min-w-0 fixed inset-x-0 top-14 bottom-0 lg:static lg:h-[760px]">
           <div className="w-full h-full">
             <RailwayMap
@@ -405,6 +441,8 @@ export default function HomePage() {
               selectedStation={selectedStationDetails}
               systemFilter={systemFilter}
               onFilterChange={setSystemFilter}
+              focusedStationId={focusedStationId}
+              hoveredTimelineStationId={hoveredTimelineStationId}
             />
           </div>
         </section>
@@ -416,14 +454,17 @@ export default function HomePage() {
           onSelectOrigin={(st) => {
             setOriginStation(st);
             setSameStationError(false);
+            setFocusedStationId(null);
           }}
           onSelectDestination={(st) => {
             setDestStation(st);
             setSameStationError(false);
+            setFocusedStationId(null);
           }}
           onSwap={handleSwap}
           onFindRoute={handleFindRoute}
           onSelectPreset={handleSelectPreset}
+          onNewJourney={handleNewJourney}
           hasSearched={hasSearched}
           sameStationError={sameStationError}
           routePreference={routePreference}
@@ -439,6 +480,7 @@ export default function HomePage() {
           onChangeSpeed={(spd) => setJourneyState((prev) => ({ ...prev, speed: spd }))}
           onSeekStation={handleSeekStation}
           onSelectStationDetails={(st) => setSelectedStationDetails(st)}
+          onFocusStation={(stId) => setFocusedStationId(stId)}
         />
       </main>
 
@@ -449,6 +491,7 @@ export default function HomePage() {
         onSetAsOrigin={(st) => {
           setSameStationError(false);
           setOriginStation(st);
+          setFocusedStationId(null);
           if (destStation && destStation.id !== st.id) {
             const calculated = calculateRoute(st.id, destStation.id);
             const ranked = rankRoutes(calculated, routePreference);
@@ -459,6 +502,7 @@ export default function HomePage() {
         onSetAsDestination={(st) => {
           setSameStationError(false);
           setDestStation(st);
+          setFocusedStationId(null);
           if (originStation && originStation.id !== st.id) {
             const calculated = calculateRoute(originStation.id, st.id);
             const ranked = rankRoutes(calculated, routePreference);
@@ -466,7 +510,7 @@ export default function HomePage() {
             setSelectedRouteIndex(0);
           }
         }}
-        onSelectLine={(lineId) => {
+        onSelectLine={() => {
           setSelectedStationDetails(null);
           setIsLinesOpen(true);
         }}
