@@ -1,26 +1,28 @@
-// Schematic path representation of the Chao Phraya River and Khlong Bangkok Yai flowing through Bangkok
-// strictly matching the official Bangkok Mass Transit Network Map.
+// Schematic path representation of the Chao Phraya River and Khlong Phasi Charoen flowing through Bangkok matching the official network map
 
 export const CHAO_PHRAYA_RIVER_PATH = `
-  M 120, 30
-  L 120, 190
-  C 120, 220 160, 240 205, 240
-  C 225, 320 205, 400 205, 465
-  L 205, 620
-  C 205, 660 195, 700 205, 705
-  C 240, 780 370, 845 500, 845
-  L 540, 845
-  C 580, 845 620, 890 640, 930
-  C 670, 980 730, 980 760, 930
-  L 760, 820
-  C 760, 760 830, 760 870, 820
-  L 960, 1000
-  C 990, 1050 1000, 1100 1000, 1160
-  L 1000, 1220
+  M 180, 40
+  L 180, 180
+  C 180, 240 220, 290 280, 330
+  L 330, 360
+  C 360, 390 350, 440 350, 500
+  L 350, 580
+  C 350, 640 410, 700 410, 760
+  L 410, 820
+  C 410, 870 460, 910 520, 940
+  L 600, 980
+  C 650, 980 700, 980 760, 980
+  L 820, 980
+  C 880, 980 930, 1030 940, 1090
+  L 950, 1140
+  C 960, 1200 900, 1260 880, 1320
+  L 880, 1380
+  C 880, 1440 960, 1490 1060, 1490
+  L 1200, 1490
 `;
 
 export const KHLONG_BANGKOK_YAI_PATH = `
-  M 205, 705
-  L 140, 705
-  L 10, 705
+  M 410, 820
+  L 300, 840
+  L 80, 840
 `;

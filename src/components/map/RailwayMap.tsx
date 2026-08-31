@@ -35,8 +35,8 @@ interface ViewBox {
 const DEFAULT_VIEWBOX: ViewBox = {
   x: 0,
   y: 0,
-  w: 1200,
-  h: 1200,
+  w: 1440,
+  h: 1440,
 };
 
 export const RailwayMap: React.FC<RailwayMapProps> = ({
@@ -458,16 +458,16 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         {/* 3. Physical Interchange Walkway Capsules */}
         <g opacity={activeRoute ? 0.35 : 0.95}>
           {/* Krung Thep Aphiwat (SRT) <-> Bang Sue (MRT) Walkway Link */}
-          <rect x="411" y="421" width="18" height="78" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
-          <line x1="420" y1="430" x2="420" y2="490" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="581" y="491" width="18" height="118" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="590" y1="500" x2="590" y2="600" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
 
           {/* Mo Chit <-> Chatuchak Park Capsule Link */}
-          <rect x="495" y="481" width="55" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
-          <line x1="505" y1="490" x2="540" y2="490" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="670" y="571" width="80" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="680" y1="580" x2="740" y2="580" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
           
           {/* Ha Yaek Lat Phrao <-> Phahon Yothin Capsule Link */}
-          <rect x="530" y="441" width="55" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
-          <line x1="540" y1="450" x2="575" y2="450" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="730" y="511" width="80" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="740" y1="520" x2="800" y2="520" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
         </g>
 
         {/* 4. Station Nodes & Labels */}
