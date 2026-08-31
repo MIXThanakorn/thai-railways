@@ -1,7 +1,7 @@
 import { Station } from '@/types/railway';
 
 // Schematic map coordinates mapped on a 1440×1440 octolinear (45°/90°) canvas
-// meticulously matching the official Bangkok Mass Transit Network Map.
+// strictly matching the official Bangkok Mass Transit Network Map.
 
 export const STATIONS: Record<string, Station> = {
   // ==========================================
@@ -252,7 +252,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 720,
-    y: 685,
+    y: 690,
     labelPos: 'right',
     description: 'Future infill station between Saphan Khwai and Ari.',
     facilities: ['Elevator']
@@ -265,7 +265,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 720,
-    y: 710,
+    y: 720,
     labelPos: 'right',
     description: 'Trendy neighborhood filled with specialty cafés, restaurants, and Ministry of Finance offices.',
     facilities: ['Elevator', 'Escalator']
@@ -278,7 +278,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 720,
-    y: 735,
+    y: 750,
     labelPos: 'right',
     description: 'Phyathai 2 Hospital and Royal Thai Army television center.',
     facilities: ['Elevator']
@@ -291,7 +291,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 720,
-    y: 760,
+    y: 780,
     labelPos: 'right',
     description: 'Bangkok largest public transit transfer rotunda, Rajavithi Hospital, and medical district.',
     facilities: ['Skywalk Network', 'Elevator', 'Restroom']
@@ -304,7 +304,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit', 'arl'],
     type: 'interchange',
     x: 720,
-    y: 790,
+    y: 810,
     labelPos: 'left',
     description: 'Crucial interchange providing direct transfer from BTS Sukhumvit Line to the Airport Rail Link express to Suvarnabhumi.',
     facilities: ['Direct Airport Rail Transfer', 'Luggage Ramp', 'Elevator', 'Restroom'],
@@ -318,7 +318,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 720,
-    y: 820,
+    y: 840,
     labelPos: 'left',
     description: 'Near Pratunam clothing wholesale district and Co-working hubs.',
     facilities: ['Elevator']
@@ -331,7 +331,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit', 'bts-silom'],
     type: 'interchange',
     x: 720,
-    y: 850,
+    y: 870,
     labelPos: 'bottom-left',
     description: 'The mega cross-platform interchange center of the BTS SkyTrain network, connecting directly to Siam Paragon, Siam Center, Siam Square, and CentralWorld.',
     facilities: ['Cross-platform interchange', 'Direct mall connections', 'Elevators', 'Customer Service Center', 'Restroom'],
@@ -345,7 +345,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 765,
-    y: 850,
+    y: 870,
     labelPos: 'bottom',
     description: 'Direct skywalk to Central Chidlom, Central Embassy, Erawan Shrine, and Gaysorn Village.',
     facilities: ['Elevator', 'Skywalk']
@@ -358,7 +358,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 805,
-    y: 850,
+    y: 870,
     labelPos: 'bottom',
     description: 'Embassy row, luxury hotels, and Central Embassy shopping center.',
     facilities: ['Elevator']
@@ -371,7 +371,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 845,
-    y: 850,
+    y: 870,
     labelPos: 'bottom',
     description: 'Cosmopolitan international district, nightlife, and hotels.',
     facilities: ['Elevator']
@@ -384,7 +384,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit', 'mrt-blue'],
     type: 'interchange',
     x: 885,
-    y: 850,
+    y: 870,
     labelPos: 'bottom-left',
     description: 'Major bustling interchange with MRT Blue Line (Sukhumvit) and direct connection to Terminal 21 shopping mall.',
     facilities: ['Direct MRT Connection', 'Terminal 21 Direct Entrance', 'Elevators', 'Restroom'],
@@ -398,7 +398,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 935,
-    y: 850,
+    y: 870,
     labelPos: 'top-right',
     description: 'The EM District: direct bridge to Emporium, EmQuartier, and EmSphere malls, adjacent to Benchasiri Park.',
     facilities: ['Direct EM District Mall Skywalk', 'Elevator', 'Park Access']
@@ -411,7 +411,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 975,
-    y: 890,
+    y: 910,
     labelPos: 'top-right',
     description: 'Bangkok premier lifestyle, gastronomy, boutique, and upscale dining district.',
     facilities: ['Elevator']
@@ -424,7 +424,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1010,
-    y: 925,
+    y: 945,
     labelPos: 'top-right',
     description: 'Bangkok Eastern Bus Terminal (Ekkamai), Bangkok Planetarium, and Gateway Ekamai mall.',
     facilities: ['Bus Terminal Connection', 'Elevator']
@@ -437,7 +437,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1045,
-    y: 960,
+    y: 980,
     labelPos: 'right',
     description: 'W District art market and bustling residential hub.',
     facilities: ['Elevator']
@@ -450,7 +450,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1080,
-    y: 995,
+    y: 1015,
     labelPos: 'right',
     description: 'Major residential gateway with Lotus On Nut and Century The Movie Plaza.',
     facilities: ['Elevator', 'Supermarket Skywalk']
@@ -463,7 +463,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1110,
-    y: 1025,
+    y: 1045,
     labelPos: 'right',
     description: 'Bang Chak community and specialty coffee district.',
     facilities: ['Elevator']
@@ -476,7 +476,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1140,
-    y: 1055,
+    y: 1075,
     labelPos: 'right',
     description: 'Direct skywalk to True Digital Park, Southeast Asia largest tech and startup campus.',
     facilities: ['True Digital Park Skywalk', 'Elevator']
@@ -489,7 +489,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1170,
-    y: 1085,
+    y: 1105,
     labelPos: 'right',
     description: 'Bustling street food corridor and shuttle hub to Mega Bangna / Central Village.',
     facilities: ['Mega Bangna Shuttle Point', 'Elevator']
@@ -502,7 +502,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1200,
-    y: 1115,
+    y: 1135,
     labelPos: 'right',
     description: 'Direct weather-protected skywalk to BITEC Bangna Exhibition Centre and Bangkok Mall.',
     facilities: ['BITEC Bangna Direct Skywalk', 'Elevator', 'Restroom']
@@ -515,7 +515,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1230,
-    y: 1145,
+    y: 1165,
     labelPos: 'right',
     description: 'Sukhumvit 107 gateway and St. Andrews International School.',
     facilities: ['Elevator']
@@ -528,7 +528,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit', 'mrt-yellow'],
     type: 'interchange',
     x: 1260,
-    y: 1175,
+    y: 1195,
     labelPos: 'bottom-left',
     description: 'Crucial interchange between BTS Sukhumvit Line and MRT Yellow Line Monorail in Samut Prakan.',
     facilities: ['Direct Yellow Line Interchange Bridge', 'Imperial World Samrong Link', 'Elevator', 'Restroom'],
@@ -542,7 +542,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1215,
+    y: 1235,
     labelPos: 'right',
     description: 'Pu Chao Saming Phrai industrial and residential area with Big C Samrong 2.',
     facilities: ['Elevator']
@@ -555,7 +555,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1250,
+    y: 1270,
     labelPos: 'right',
     description: 'Direct gateway to the famous three-headed colossal Erawan Museum.',
     facilities: ['Erawan Museum Access', 'Elevator']
@@ -568,7 +568,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1285,
+    y: 1305,
     labelPos: 'right',
     description: 'Direct access to the Royal Thai Naval Academy campus along the Chao Phraya river mouth.',
     facilities: ['Elevator']
@@ -581,7 +581,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1320,
+    y: 1340,
     labelPos: 'right',
     description: 'Samut Prakan city center, Pak Nam fresh seafood market, and Samut Prakan Observation Tower.',
     facilities: ['City Tower Access', 'Elevator', 'Restroom']
@@ -594,7 +594,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1355,
+    y: 1375,
     labelPos: 'right',
     description: 'Srinagarindra Road junction in Samut Prakan.',
     facilities: ['Elevator']
@@ -607,7 +607,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1390,
+    y: 1410,
     labelPos: 'right',
     description: 'Direct bridge to Robinson Lifestyle Samut Prakan and Big C.',
     facilities: ['Robinson Mall Direct Bridge', 'Elevator']
@@ -620,7 +620,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'normal',
     x: 1260,
-    y: 1425,
+    y: 1445,
     labelPos: 'right',
     description: 'Sai Luat Road community.',
     facilities: ['Elevator']
@@ -633,7 +633,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-sukhumvit'],
     type: 'terminal',
     x: 1260,
-    y: 1460,
+    y: 1475,
     labelPos: 'right',
     description: 'Southern terminal of BTS Sukhumvit Line with Park & Ride building, gateway to Ancient City and Bang Pu Seaside Resort.',
     facilities: ['Major Park & Ride', 'Elevator', 'Restroom', 'Ancient City Shuttle']
@@ -650,7 +650,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'terminal',
     x: 660,
-    y: 850,
+    y: 870,
     labelPos: 'top-left',
     description: 'Terminal of BTS Silom Line with direct skywalk to MBK Center, Bangkok Art and Culture Centre (BACC), and Supachalasai Stadium.',
     facilities: ['MBK Center Direct Bridge', 'BACC Art Centre Walkway', 'Elevator', 'Restroom']
@@ -663,7 +663,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 720,
-    y: 890,
+    y: 900,
     labelPos: 'left',
     description: 'Royal Bangkok Sports Club, luxury five-star hotels, and residences along Ratchadamri boulevard.',
     facilities: ['Elevator']
@@ -716,7 +716,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 720,
-    y: 1045,
+    y: 1050,
     labelPos: 'left',
     description: 'Bangkok Christian College, embassies, and jewelry trade district.',
     facilities: ['Elevator']
@@ -729,7 +729,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 720,
-    y: 1080,
+    y: 1090,
     labelPos: 'bottom-right',
     description: 'Major Chao Phraya River boat interchange at Sathorn Pier for river ferries and hotel shuttles.',
     facilities: ['Chao Phraya Express Boat Pier Connection', 'Elevator']
@@ -742,7 +742,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom', 'bts-gold'],
     type: 'interchange',
     x: 640,
-    y: 1080,
+    y: 1090,
     labelPos: 'bottom',
     description: 'First Thonburi station across the river, crucial transfer to BTS Gold Line for ICONSIAM.',
     facilities: ['Direct Gold Line Transfer', 'Elevator', 'Restroom'],
@@ -756,7 +756,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 560,
-    y: 1080,
+    y: 1090,
     labelPos: 'bottom',
     description: 'Historical Wongwian Yai King Taksin Monument and commuter hub.',
     facilities: ['Elevator']
@@ -769,7 +769,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 490,
-    y: 1080,
+    y: 1090,
     labelPos: 'bottom',
     description: 'Somdech Phra Pinklao Hospital area.',
     facilities: ['Elevator']
@@ -782,7 +782,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom'],
     type: 'normal',
     x: 420,
-    y: 1080,
+    y: 1090,
     labelPos: 'top',
     description: 'Famous culinary destination renowned for traditional Thai-Chinese street delicacies.',
     facilities: ['BRT Ratchaphruek Connection', 'Elevator']
@@ -808,7 +808,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-silom', 'mrt-blue'],
     type: 'interchange',
     x: 280,
-    y: 940,
+    y: 930,
     labelPos: 'bottom-left',
     description: 'Major western gateway interchange seamlessly connecting BTS Silom Line with MRT Blue Line.',
     facilities: ['Direct MRT Blue Transfer', 'Khlong Phasi Charoen Pier Connection', 'Elevator', 'Restroom'],
@@ -826,7 +826,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-gold'],
     type: 'normal',
     x: 580,
-    y: 1020,
+    y: 1030,
     labelPos: 'top-right',
     description: 'Direct bridge connection to ICONSIAM world-class luxury riverside mega-complex.',
     facilities: ['ICONSIAM Direct Entrance', 'River Promenade', 'Elevator']
@@ -839,7 +839,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['bts-gold'],
     type: 'terminal',
     x: 520,
-    y: 960,
+    y: 970,
     labelPos: 'top',
     description: 'Terminal of BTS Gold Line near Taksin Hospital and Khlong San District Office.',
     facilities: ['Elevator']
@@ -856,7 +856,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'interchange',
     x: 390,
-    y: 940,
+    y: 930,
     labelPos: 'bottom-left',
     description: 'The monumental bi-level junction interchange of MRT Blue Line connecting the orbital loop and western Lak Song extension.',
     facilities: ['Multi-level Platform Interchange', 'Elevators', 'Restrooms', 'Information Center']
@@ -869,7 +869,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 390,
-    y: 880,
+    y: 870,
     labelPos: 'left',
     description: 'Charan Sanitwong Soi 13 and Siam Technology College.',
     facilities: ['Elevator']
@@ -882,7 +882,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 390,
-    y: 820,
+    y: 810,
     labelPos: 'left',
     description: 'Fai Chai intersection and Siriraj Hospital access route.',
     facilities: ['Elevator']
@@ -895,7 +895,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 390,
-    y: 760,
+    y: 750,
     labelPos: 'left',
     description: 'Bang Khun Non food district, Thonburi railway station access.',
     facilities: ['Elevator']
@@ -908,7 +908,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 390,
-    y: 700,
+    y: 690,
     labelPos: 'left',
     description: 'Rama VIII Bridge entrance and Pinklao commercial district.',
     facilities: ['Elevator']
@@ -921,7 +921,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 390,
-    y: 645,
+    y: 635,
     labelPos: 'left',
     description: 'Krung Thon Bridge (Sang Hi) approach road.',
     facilities: ['Elevator']
@@ -946,8 +946,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL08',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 420,
-    y: 560,
+    x: 425,
+    y: 625,
     labelPos: 'top-left',
     description: 'Yanhee International Hospital and riverside community.',
     facilities: ['Elevator']
@@ -959,8 +959,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL09',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 450,
-    y: 530,
+    x: 460,
+    y: 660,
     labelPos: 'bottom',
     description: 'Historic woodcraft district and gateway to Gateway at Bangsue shopping mall.',
     facilities: ['Chao Phraya Express Boat Bang Pho Pier', 'Elevator']
@@ -972,8 +972,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL10',
     lines: ['mrt-blue', 'mrt-purple'],
     type: 'interchange',
-    x: 480,
-    y: 530,
+    x: 510,
+    y: 660,
     labelPos: 'bottom-left',
     description: 'Crucial interchange linking MRT Blue Line orbital with MRT Purple Line to Nonthaburi.',
     facilities: ['Multi-level Cross-Line Interchange', 'Elevators', 'Restrooms', 'Information Desk'],
@@ -987,7 +987,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue', 'srt-dark-red', 'srt-light-red'],
     type: 'interchange',
     x: 600,
-    y: 530,
+    y: 660,
     labelPos: 'bottom-left',
     description: 'Direct underground walkway to Krung Thep Aphiwat Central Terminal for SRT Red Lines and intercity rail.',
     facilities: ['SRT Central Terminal Walkway', 'Elevator', 'Restroom'],
@@ -1000,8 +1000,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL12',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 650,
-    y: 530,
+    x: 660,
+    y: 660,
     labelPos: 'bottom',
     description: 'Direct entrance to Or Tor Kor Gourmet Market and Chatuchak Weekend Market Section 2.',
     facilities: ['Direct Or Tor Kor Market Entrance', 'Elevator']
@@ -1135,7 +1135,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue', 'bts-sukhumvit'],
     type: 'interchange',
     x: 885,
-    y: 850,
+    y: 870,
     labelPos: 'top-right',
     description: 'Direct underground connection to BTS Asok and Terminal 21 shopping mall.',
     facilities: ['Direct BTS Asok Skywalk', 'Terminal 21 Entrance', 'Elevator', 'Restroom'],
@@ -1149,7 +1149,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 885,
-    y: 890,
+    y: 900,
     labelPos: 'right',
     description: 'Direct underground walkway into QSNCC exhibition hall and Benjakitti Forest Park.',
     facilities: ['Direct QSNCC Exhibition Access', 'Park Access', 'Elevator', 'Restroom']
@@ -1201,7 +1201,7 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL27',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 660,
+    x: 665,
     y: 930,
     labelPos: 'bottom',
     description: 'Samyan Mitrtown 24-hour lifestyle complex and Chulalongkorn University.',
@@ -1214,7 +1214,7 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL28',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 600,
+    x: 610,
     y: 930,
     labelPos: 'bottom',
     description: 'Bangkok iconic historic central railway terminal and gateway to Yaowarat Chinatown.',
@@ -1227,7 +1227,7 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL29',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 545,
+    x: 560,
     y: 930,
     labelPos: 'bottom',
     description: 'Heart of Yaowarat Chinatown and Wat Mangkon Kamalawat (Dragon Lotus Temple).',
@@ -1240,7 +1240,7 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL30',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 495,
+    x: 510,
     y: 930,
     labelPos: 'bottom',
     description: 'Old Town historic architecture, Giant Swing, Mega Plaza Saphan Lek, and Rommaninat Park.',
@@ -1253,7 +1253,7 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL31',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 445,
+    x: 460,
     y: 930,
     labelPos: 'bottom',
     description: 'Most beautiful subway station in Thailand designed like a royal throne hall, next to Museum Siam, Wat Pho, and Grand Palace.',
@@ -1266,8 +1266,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'BL32',
     lines: ['mrt-blue'],
     type: 'normal',
-    x: 400,
-    y: 980,
+    x: 425,
+    y: 965,
     labelPos: 'bottom',
     description: 'Wat Arun (Temple of Dawn) and Royal Thai Navy headquarters.',
     facilities: ['Golden Swan Heritage Motif', 'Elevator']
@@ -1280,7 +1280,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 335,
-    y: 940,
+    y: 930,
     labelPos: 'bottom',
     description: 'Wat Paknam Phasi Charoen (Giant Golden Buddha) and Bang Phai Hospital.',
     facilities: ['Wat Paknam Viewpoint', 'Elevator']
@@ -1293,7 +1293,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue', 'bts-silom'],
     type: 'interchange',
     x: 280,
-    y: 940,
+    y: 930,
     labelPos: 'top-right',
     description: 'Interchange directly connecting MRT Blue Line with BTS Silom Line.',
     facilities: ['Direct BTS Skywalk', 'Pier Link', 'Elevator', 'Restroom'],
@@ -1307,7 +1307,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 230,
-    y: 940,
+    y: 930,
     labelPos: 'bottom',
     description: 'Phetkasem Soi 48 residential community.',
     facilities: ['Elevator']
@@ -1320,7 +1320,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 180,
-    y: 940,
+    y: 930,
     labelPos: 'bottom',
     description: 'Direct skywalk entrance into Seacon Bangkae shopping center.',
     facilities: ['Direct Seacon Bangkae Skybridge', 'Elevator']
@@ -1333,7 +1333,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'normal',
     x: 130,
-    y: 940,
+    y: 930,
     labelPos: 'bottom',
     description: 'Bang Khae fresh market and Lotus Bangkae.',
     facilities: ['Elevator']
@@ -1346,7 +1346,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-blue'],
     type: 'terminal',
     x: 80,
-    y: 940,
+    y: 930,
     labelPos: 'bottom',
     description: 'Western terminal of MRT Blue Line with Park & Ride building and direct skybridge to The Mall Bangkae.',
     facilities: ['Park & Ride Building', 'Direct The Mall Skywalk', 'Elevator', 'Restroom']
@@ -1533,7 +1533,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-purple'],
     type: 'normal',
     x: 480,
-    y: 465,
+    y: 500,
     labelPos: 'right',
     description: 'Big C Wong Sawang and Kasemrad Prachachuen Hospital.',
     facilities: ['Elevator']
@@ -1546,7 +1546,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-purple', 'srt-light-red'],
     type: 'interchange',
     x: 480,
-    y: 495,
+    y: 580,
     labelPos: 'bottom-left',
     description: 'Interchange with SRT Light Red Line commuter train and Bang Son fresh market.',
     facilities: ['SRT Light Red Transfer', 'Elevator', 'Restroom'],
@@ -2037,7 +2037,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow', 'arl'],
     type: 'interchange',
     x: 1225,
-    y: 790,
+    y: 810,
     labelPos: 'bottom-right',
     description: 'Interchange directly connecting MRT Yellow Line with Airport Rail Link Hua Mak Station.',
     facilities: ['Direct ARL Skybridge Connection', 'Elevator', 'Restroom'],
@@ -2051,7 +2051,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 840,
+    y: 860,
     labelPos: 'right',
     description: 'Thanya Park Shopping Mall.',
     facilities: ['Thanya Park Skywalk', 'Elevator']
@@ -2064,7 +2064,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 880,
+    y: 900,
     labelPos: 'right',
     description: 'Nut intersection (Sukhumvit 77) and Eiam Sombat Market.',
     facilities: ['Elevator']
@@ -2077,7 +2077,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 920,
+    y: 940,
     labelPos: 'right',
     description: 'Srinagarindra Soi 38 and Pickadaily Bangkok.',
     facilities: ['Elevator']
@@ -2090,7 +2090,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 960,
+    y: 980,
     labelPos: 'right',
     description: 'Direct bridge to Seacon Square, Paradise Park, Srinakarin Train Night Market, and King Rama IX Royal Park.',
     facilities: ['Direct Seacon Square Skywalk', 'Direct Paradise Park Bridge', 'Elevator', 'Restroom']
@@ -2103,7 +2103,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 1000,
+    y: 1020,
     labelPos: 'right',
     description: 'Si Udom intersection (Sukhumvit 103) and Sinphaet Srinakarin Hospital.',
     facilities: ['Elevator']
@@ -2116,7 +2116,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 1040,
+    y: 1060,
     labelPos: 'right',
     description: 'Major Park & Ride facility and Yellow Line main operations depot at Bang Na-Trat intersection.',
     facilities: ['Major Park & Ride', 'Elevator', 'Restroom']
@@ -2129,7 +2129,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 1080,
+    y: 1100,
     labelPos: 'right',
     description: 'La Salle intersection (Sukhumvit 105) and Sikarin Hospital.',
     facilities: ['Elevator']
@@ -2142,7 +2142,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 1110,
+    y: 1130,
     labelPos: 'right',
     description: 'Bearing intersection (Sukhumvit 107).',
     facilities: ['Elevator']
@@ -2155,7 +2155,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1225,
-    y: 1140,
+    y: 1160,
     labelPos: 'right',
     description: 'Dan Samrong intersection and JAS Urban Srinakarin mall.',
     facilities: ['Elevator']
@@ -2168,7 +2168,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1185,
-    y: 1175,
+    y: 1195,
     labelPos: 'top',
     description: 'Theparak Road intersection.',
     facilities: ['Elevator']
@@ -2181,7 +2181,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['mrt-yellow'],
     type: 'normal',
     x: 1140,
-    y: 1175,
+    y: 1195,
     labelPos: 'top',
     description: 'Thipphawan community and Assumption College Samutprakarn.',
     facilities: ['Elevator']
@@ -2198,7 +2198,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl'],
     type: 'normal',
     x: 790,
-    y: 790,
+    y: 810,
     labelPos: 'top',
     description: 'Baiyoke Tower II and Pratunam Wholesale Garment Market.',
     facilities: ['Elevator']
@@ -2211,7 +2211,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl', 'mrt-blue'],
     type: 'interchange',
     x: 885,
-    y: 790,
+    y: 810,
     labelPos: 'top-left',
     description: 'Central express interchange station with direct skybridge to MRT Blue Line (Phetchaburi).',
     facilities: ['Direct MRT Phetchaburi Skybridge', 'Airport Check-in Pavilion', 'Elevators', 'Restrooms'],
@@ -2225,7 +2225,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl'],
     type: 'normal',
     x: 1000,
-    y: 790,
+    y: 810,
     labelPos: 'top',
     description: 'Ramkhamhaeng Road and Khlong Saen Saep boat link at Ramkhamhaeng Pier.',
     facilities: ['Canal Boat Link', 'Elevator']
@@ -2238,7 +2238,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl', 'mrt-yellow'],
     type: 'interchange',
     x: 1225,
-    y: 790,
+    y: 810,
     labelPos: 'top-left',
     description: 'Interchange directly connecting Airport Rail Link with MRT Yellow Line Monorail.',
     facilities: ['Direct Yellow Line Skywalk', 'Elevator', 'Restroom'],
@@ -2252,7 +2252,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl'],
     type: 'normal',
     x: 1285,
-    y: 790,
+    y: 810,
     labelPos: 'top',
     description: 'Eastern Outer Ring Road (Motorway 9) junction and Park & Ride.',
     facilities: ['Park & Ride', 'Elevator']
@@ -2265,7 +2265,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl'],
     type: 'normal',
     x: 1350,
-    y: 790,
+    y: 810,
     labelPos: 'top',
     description: 'King Mongkut Institute of Technology Ladkrabang (KMITL) and Suvarnabhumi Cargo District.',
     facilities: ['Elevator']
@@ -2278,7 +2278,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['arl'],
     type: 'terminal',
     x: 1350,
-    y: 860,
+    y: 880,
     labelPos: 'right',
     description: 'Direct terminal inside Suvarnabhumi International Airport (BKK) basement level, serving all international and domestic flight travelers.',
     facilities: ['Direct BKK Airport Terminal Access', 'Novotel Airport Hotel Walkway', 'Luggage Carts', 'Elevator', 'Restroom']
@@ -2295,7 +2295,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-dark-red', 'srt-light-red', 'mrt-blue'],
     type: 'interchange',
     x: 600,
-    y: 470,
+    y: 580,
     labelPos: 'bottom-right',
     description: 'Southeast Asia largest railway terminal, central hub for all long-distance State Railway trains, SRT Dark Red Line, SRT Light Red Line, and MRT Blue Line Bang Sue.',
     facilities: ['SRT Main Railway Grand Hall', 'Direct MRT Blue Walkway', 'Food Court', 'Elevators', 'Restrooms', 'Information Center'],
@@ -2309,7 +2309,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-dark-red'],
     type: 'normal',
     x: 600,
-    y: 420,
+    y: 470,
     labelPos: 'left',
     description: 'Northern side of Chatuchak area and Vibhavadi Rangsit Road.',
     facilities: ['Elevator']
@@ -2322,7 +2322,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-dark-red'],
     type: 'normal',
     x: 600,
-    y: 370,
+    y: 390,
     labelPos: 'left',
     description: 'Famous Wat Samian Nari temple and Prachachuen community.',
     facilities: ['Elevator']
@@ -2335,7 +2335,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-dark-red'],
     type: 'normal',
     x: 600,
-    y: 320,
+    y: 330,
     labelPos: 'right',
     description: 'Kasetsart University (Vibhavadi gate) and Bang Khen police station.',
     facilities: ['Elevator']
@@ -2348,7 +2348,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-dark-red'],
     type: 'normal',
     x: 600,
-    y: 270,
+    y: 275,
     labelPos: 'right',
     description: 'Daily News headquarters and North Bangkok University.',
     facilities: ['Elevator']
@@ -2416,8 +2416,8 @@ export const STATIONS: Record<string, Station> = {
     code: 'RW05',
     lines: ['srt-light-red'],
     type: 'normal',
-    x: 330,
-    y: 520,
+    x: 340,
+    y: 660,
     labelPos: 'bottom',
     description: 'Bang Bamru residential district in Bang Phlat.',
     facilities: ['Elevator']
@@ -2430,7 +2430,7 @@ export const STATIONS: Record<string, Station> = {
     lines: ['srt-light-red'],
     type: 'terminal',
     x: 180,
-    y: 520,
+    y: 660,
     labelPos: 'left',
     description: 'Western terminal of SRT Light Red Line near Taling Chan Floating Market and Southern Bus Terminal shortcut.',
     facilities: ['Park & Ride', 'Elevator', 'Restroom']

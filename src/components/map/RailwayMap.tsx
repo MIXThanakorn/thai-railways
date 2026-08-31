@@ -458,8 +458,8 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
         {/* 3. Physical Interchange Walkway Capsules */}
         <g opacity={activeRoute ? 0.35 : 0.95}>
           {/* Krung Thep Aphiwat (SRT) <-> Bang Sue (MRT) Walkway Link */}
-          <rect x="591" y="461" width="18" height="78" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
-          <line x1="600" y1="470" x2="600" y2="530" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
+          <rect x="591" y="571" width="18" height="98" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
+          <line x1="600" y1="580" x2="600" y2="660" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
 
           {/* Mo Chit <-> Chatuchak Park Capsule Link */}
           <rect x="665" y="611" width="66" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
@@ -468,10 +468,6 @@ export const RailwayMap: React.FC<RailwayMapProps> = ({
           {/* Ha Yaek Lat Phrao <-> Phahon Yothin Capsule Link */}
           <rect x="710" y="561" width="66" height="18" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
           <line x1="720" y1="570" x2="765" y2="570" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
-
-          {/* Makkasan (ARL) <-> Phetchaburi (MRT) Walkway Link */}
-          <rect x="876" y="781" width="18" height="38" rx="9" fill="#FFFFFF" stroke="#17202A" strokeWidth="2" />
-          <line x1="885" y1="790" x2="885" y2="810" stroke="#17202A" strokeWidth="2" strokeDasharray="2 2" />
         </g>
 
         {/* 4. Station Nodes & Labels */}
