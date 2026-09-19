@@ -23,7 +23,7 @@ export const MapControls: React.FC<MapControlsProps> = ({
   onToggleFullscreen,
 }) => {
   return (
-    <div className="absolute top-3 right-3 z-20 flex flex-col bg-white border border-[#DDE2E7] rounded-lg shadow-xs overflow-hidden">
+    <div className="absolute top-3 right-3 z-20 flex flex-col bg-white border border-[#CCD3DB] overflow-hidden">
       <button
         onClick={onZoomIn}
         title="ซูมเข้า (Zoom In)"

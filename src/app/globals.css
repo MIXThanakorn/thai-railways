@@ -30,6 +30,25 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #3155D9;
+  outline-offset: 2px;
+}
+
+.map-filter-scroll {
+  scrollbar-width: none;
+}
+
+.map-filter-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 /* Precise transit scrollbar */
 ::-webkit-scrollbar {
   width: 5px;

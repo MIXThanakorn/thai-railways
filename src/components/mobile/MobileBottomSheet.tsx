@@ -72,20 +72,20 @@ export const MobileBottomSheet: React.FC<MobileBottomSheetProps> = ({
       {isExpanded && (
         <div
           onClick={() => setIsExpanded(false)}
-          className="fixed inset-0 z-30 bg-slate-900/40 backdrop-blur-xs lg:hidden animate-in fade-in duration-200"
+          className="fixed inset-0 z-30 bg-slate-950/30 lg:hidden animate-in fade-in duration-200"
         />
       )}
 
       {/* Floating Bottom Sheet */}
       <div
-        className={`fixed left-0 right-0 bottom-0 z-40 bg-white rounded-t-3xl border-t border-slate-200 shadow-2xl transition-all duration-300 ease-out lg:hidden flex flex-col ${
-          isExpanded ? 'h-[85vh] max-h-[85vh]' : 'h-auto max-h-[175px]'
+        className={`fixed left-0 right-0 bottom-0 z-40 bg-white rounded-t-2xl border-t border-slate-300 shadow-[0_-8px_24px_rgba(15,23,42,0.12)] transition-all duration-300 ease-out lg:hidden flex flex-col pb-[env(safe-area-inset-bottom)] ${
+          isExpanded ? 'h-[88dvh] max-h-[88dvh]' : 'h-auto max-h-[158px]'
         }`}
       >
         {/* Drag Handle & Header Banner */}
         <div
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full pt-2.5 pb-2 px-4 flex flex-col items-center cursor-pointer select-none bg-slate-50/90 rounded-t-3xl border-b border-slate-100 hover:bg-slate-100/80 transition-colors"
+          className="w-full pt-2.5 pb-2 px-4 flex flex-col items-center cursor-pointer select-none bg-[#F8FAFC] rounded-t-2xl border-b border-slate-200 hover:bg-slate-100 transition-colors"
         >
           {/* Handle bar */}
           <div className="w-12 h-1.5 bg-slate-300 rounded-full mb-1.5" />

@@ -22,7 +22,7 @@ export const MapLineFilter: React.FC<MapLineFilterProps> = ({
   onFilterChange,
 }) => {
   return (
-    <div className="absolute top-3 left-3 z-20 flex items-center gap-1 bg-white/95 backdrop-blur-sm p-1 rounded-xl border border-[#DDE2E7] shadow-sm max-w-[calc(100%-140px)] overflow-x-auto">
+    <div className="absolute top-3 left-3 z-20 flex items-center gap-0.5 bg-white/95 p-1 border border-[#CCD3DB] max-w-[calc(100%-64px)] overflow-x-auto map-filter-scroll">
       <div className="flex items-center gap-1 px-2 text-[11px] font-bold text-[#64748B] hidden sm:flex">
         <Layers className="w-3.5 h-3.5 text-[#64748B]" />
         <span>ระบบ</span>
@@ -35,9 +35,9 @@ export const MapLineFilter: React.FC<MapLineFilterProps> = ({
           <button
             key={item.id}
             onClick={() => onFilterChange(item.id)}
-            className={`px-2.5 py-1 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-150 flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition-colors duration-150 flex items-center gap-1.5 ${
               isSelected
-                ? 'bg-[#17202A] text-white shadow-sm'
+                ? 'bg-[#17202A] text-white'
                 : 'text-[#475569] hover:bg-[#F1F5F9] hover:text-[#0F172A]'
             }`}
           >

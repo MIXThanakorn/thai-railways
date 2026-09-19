@@ -110,31 +110,6 @@ export default function HomePage() {
     }
   };
 
-  // Load Initial Demo Route
-  useEffect(() => {
-    const defaultOrigin = STATIONS['siam'];
-    const defaultDest = STATIONS['phrom-phong'];
-    if (defaultOrigin && defaultDest) {
-      setOriginStation(defaultOrigin);
-      setDestStation(defaultDest);
-      const calculated = calculateRoute(defaultOrigin.id, defaultDest.id);
-      const ranked = rankRoutes(calculated, 'fastest');
-      setRoutes(ranked);
-      setSelectedRouteIndex(0);
-      setHasSearched(true);
-      setJourneyState({
-        currentStationIndex: 0,
-        currentStationId: defaultOrigin.id,
-        isPlaying: false,
-        speed: 1,
-        progress: 0,
-        isTransferring: false,
-        activeTransfer: null,
-        isCompleted: false,
-      });
-    }
-  }, []);
-
   // Preset Selection Helper
   const handleSelectPreset = (originId: string, destId: string) => {
     const orig = STATIONS[originId];
@@ -337,9 +312,9 @@ export default function HomePage() {
       />
 
       {/* Main Content Layout */}
-      <main className="flex-1 max-w-[1700px] w-full mx-auto p-0 sm:p-4 lg:p-5 flex flex-col lg:flex-row gap-4 relative">
+      <main className="flex-1 max-w-[1800px] w-full mx-auto p-0 lg:p-4 flex flex-col lg:flex-row gap-4 relative lg:h-[calc(100dvh-56px)] lg:min-h-[680px] lg:overflow-hidden">
         {/* Desktop Left Column (410px width, hidden on mobile in favor of BottomSheet) */}
-        <aside className="hidden lg:flex w-[410px] shrink-0 space-y-3.5 flex-col">
+        <aside className="hidden lg:flex w-[390px] xl:w-[410px] shrink-0 space-y-3.5 flex-col overflow-y-auto overscroll-contain pr-1 pb-6">
           {/* Station Selector / Route Input */}
           <StationSelector
             origin={originStation}
@@ -430,7 +405,7 @@ export default function HomePage() {
         </aside>
 
         {/* Right Column: Full-height / Seamless Map Canvas */}
-        <section className="flex-1 flex flex-col min-w-0 fixed inset-x-0 top-14 bottom-0 lg:static lg:h-[760px]">
+        <section className="flex-1 flex flex-col min-w-0 fixed inset-x-0 top-14 bottom-0 lg:static lg:h-full lg:min-h-0">
           <div className="w-full h-full">
             <RailwayMap
               activeRoute={activeRoute}
